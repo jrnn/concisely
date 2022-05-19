@@ -7,7 +7,11 @@ repositories {
 }
 
 dependencies {
+    testImplementation "com.github.npathai:hamcrest-optional:2.0.0"
+    testImplementation "org.hamcrest:hamcrest:2.2"
     testImplementation "org.junit.jupiter:junit-jupiter:5.8.2"
+    testImplementation "org.mockito:mockito-core:4.5.1"
+    testImplementation "org.mockito:mockito-junit-jupiter:4.5.1"
 }
 
 tasks.named("test") {
