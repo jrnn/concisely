@@ -1,0 +1,27 @@
+name: Gradle Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  gradle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: corretto
+      - name: Run Gradle build
+        uses: gradle/gradle-build-action@fec4a42eb0c83154e5c9590748ba8337949c5701
+        with:
+          gradle-version: 7.4.2
+          arguments: build
