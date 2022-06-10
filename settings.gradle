@@ -1,3 +1,4 @@
 rootProject.name = "concisely"
 include "concisely-core"
 include "concisely-processor"
+include "integration-tests"
