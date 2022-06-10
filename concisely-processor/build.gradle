@@ -1,0 +1,7 @@
+plugins {
+    id "concisely-conventions"
+}
+
+dependencies {
+    implementation project(":concisely-core")
+}

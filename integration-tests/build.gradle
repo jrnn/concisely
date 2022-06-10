@@ -1,0 +1,43 @@
+plugins {
+    id "java"
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    intTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+configurations {
+    intTestImplementation.extendsFrom testImplementation
+    intTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+dependencies {
+    intTestImplementation project(":concisely-core")
+    intTestAnnotationProcessor project(":concisely-processor")
+    intTestImplementation "org.hamcrest:hamcrest:2.2"
+    intTestImplementation "org.junit.jupiter:junit-jupiter:5.8.2"
+}
+
+task intTest(type: Test) {
+    group = "verification"
+    description = "Runs integration tests"
+    classpath = sourceSets.intTest.runtimeClasspath
+    testClassesDirs = sourceSets.intTest.output.classesDirs
+
+    useJUnitPlatform {
+        includeEngines "junit-jupiter"
+    }
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut"
+    }
+    shouldRunAfter test
+}
+
+check.dependsOn intTest
