@@ -1,0 +1,21 @@
+plugins {
+    id "java-library"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(":concisely-core")
+    testImplementation "org.hamcrest:hamcrest:2.2"
+    testImplementation "org.junit.jupiter:junit-jupiter:5.8.2"
+    testImplementation "org.mockito:mockito-junit-jupiter:4.5.1"
+}
+
+tasks.named("test") {
+    useJUnitPlatform()
+}
+
+group = "fi.jrnn"
+version = "0.0.0"
