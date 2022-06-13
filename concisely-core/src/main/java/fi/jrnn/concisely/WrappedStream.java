@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Juho Juurinen
+ *
+ * Licensed under the MIT license: https://opensource.org/licenses/MIT
+ */
 package fi.jrnn.concisely;
 
 import java.util.Optional;
@@ -29,6 +34,8 @@ import java.util.stream.Stream;
  * <p>
  * I don't know if anything from 1.9 or later can be included, if supported source code version in annotation
  * processing will be 1.8...?
+ *
+ * @author Juho Juurinen
  */
 abstract class WrappedStream<T> {
 

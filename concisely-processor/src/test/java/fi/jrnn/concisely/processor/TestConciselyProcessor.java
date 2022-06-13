@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Juho Juurinen
+ *
+ * Licensed under the MIT license: https://opensource.org/licenses/MIT
+ */
 package fi.jrnn.concisely.processor;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,6 +19,9 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.TypeElement;
 import java.util.Set;
 
+/**
+ * @author Juho Juurinen
+ */
 @DisplayName("ConciselyProcessor")
 @ExtendWith(MockitoExtension.class)
 class TestConciselyProcessor {

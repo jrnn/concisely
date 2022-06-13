@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Juho Juurinen
+ *
+ * Licensed under the MIT license: https://opensource.org/licenses/MIT
+ */
 package fi.jrnn.concisely.annotation;
 
 import static java.lang.annotation.ElementType.TYPE;
@@ -12,6 +17,8 @@ import java.lang.annotation.Target;
  * The annotated class should be a typical POJO (or, in a sense, a JavaBean). Namely, all relationships to other
  * classes annotated with {@link Concisely} should be evident from its properties, and for each of those properties,
  * there should be a corresponding public accessor (typically a "getter").
+ *
+ * @author Juho Juurinen
  */
 @Target(TYPE)
 @Retention(SOURCE)

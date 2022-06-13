@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Juho Juurinen
+ *
+ * Licensed under the MIT license: https://opensource.org/licenses/MIT
+ */
 package fi.jrnn.concisely.processor;
 
 import static java.util.stream.Collectors.toSet;
@@ -9,6 +14,9 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 import java.util.Set;
 
+/**
+ * @author Juho Juurinen
+ */
 @SupportedAnnotationTypes("fi.jrnn.concisely.annotation.Concisely")
 public class ConciselyProcessor extends AbstractProcessor {
 

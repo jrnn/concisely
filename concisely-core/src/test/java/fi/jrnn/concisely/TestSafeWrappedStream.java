@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Juho Juurinen
+ *
+ * Licensed under the MIT license: https://opensource.org/licenses/MIT
+ */
 package fi.jrnn.concisely;
 
 import static fi.jrnn.concisely.SafeWrappedStream.safeStream;
@@ -17,6 +22,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+/**
+ * @author Juho Juurinen
+ */
 @DisplayName("SafeWrappedStream")
 class TestSafeWrappedStream {
 
