@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Juho Juurinen
+ *
+ * Licensed under the MIT license: https://opensource.org/licenses/MIT
+ */
 package fi.jrnn.concisely;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
@@ -22,6 +27,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
+/**
+ * @author Juho Juurinen
+ */
 @ExtendWith(MockitoExtension.class)
 class TestWrappedStream {
 

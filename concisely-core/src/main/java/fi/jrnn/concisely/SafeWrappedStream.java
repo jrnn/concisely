@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Juho Juurinen
+ *
+ * Licensed under the MIT license: https://opensource.org/licenses/MIT
+ */
 package fi.jrnn.concisely;
 
 import static java.util.function.Function.identity;
@@ -16,6 +21,8 @@ import java.util.stream.Stream;
  * The static methods are available via inheritance, and should be utilized by generated classes. Overloading should
  * simplify the usage of these methods in generated code -- no need to discern what is being passed as a parameter,
  * apart from making sure it's a recognized type.
+ *
+ * @author Juho Juurinen
  */
 abstract class SafeWrappedStream<T> extends WrappedStream<T> {
 
