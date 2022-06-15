@@ -1,7 +1,3 @@
 plugins {
     id "concisely-conventions"
 }
-
-dependencies {
-    testImplementation "com.github.npathai:hamcrest-optional:2.0.0"
-}

@@ -22,6 +22,6 @@ class IntTestDummy {
 
     @Test
     void theOwlsAreNotWhatTheySeem() {
-        assertThat(SomeClass.SOME_VALUE, is(1));
+        assertThat(1, is(1));
     }
 }
