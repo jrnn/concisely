@@ -13,10 +13,12 @@ import fi.jrnn.concisely.VisibleForTesting;
 import fi.jrnn.concisely.processor.discovery.ConciselyModelCreator;
 
 import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.util.Types;
 
 import java.util.Set;
 
@@ -26,9 +28,17 @@ import java.util.Set;
 @SupportedAnnotationTypes("fi.jrnn.concisely.annotation.Concisely")
 public class ConciselyProcessor extends AbstractProcessor {
 
+    private Types types;
+
     @Override
     public SourceVersion getSupportedSourceVersion() {
         return SourceVersion.latestSupported();
+    }
+
+    @Override
+    public synchronized void init(ProcessingEnvironment processingEnv) {
+        super.init(processingEnv);
+        this.types = processingEnv.getTypeUtils();
     }
 
     @Override
@@ -52,7 +62,7 @@ public class ConciselyProcessor extends AbstractProcessor {
 
     @VisibleForTesting
     ConciselyModelCreator modelCreator() {
-        return new ConciselyModelCreator();
+        return new ConciselyModelCreator(types);
     }
 
     private void debug(String message) {
