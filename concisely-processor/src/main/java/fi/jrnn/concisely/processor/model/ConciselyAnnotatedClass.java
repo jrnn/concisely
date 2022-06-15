@@ -8,13 +8,16 @@ package fi.jrnn.concisely.processor.model;
 import fi.jrnn.concisely.annotation.Concisely;
 
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
 
 import java.util.Objects;
 
 /**
  * Represents a compile-time class annotated with {@link Concisely}.
  * <p>
- * Since every class in scope must be unique, by extension, the enclosed {@link TypeElement} must be unique, too.
+ * For convenience, contains both the class {@code element} (the "blueprint"), and the {@code type} (the "invocation").
+ * <p>
+ * Since every class in scope must be unique, by extension, the encapsulated {@link TypeElement} must be unique, too.
  * Therefore, {@link #equals(Object)} and {@link #hashCode()} need not consider other properties than {@code element}.
  *
  * @author Juho Juurinen
@@ -22,9 +25,11 @@ import java.util.Objects;
 public class ConciselyAnnotatedClass {
 
     private final TypeElement element;
+    private final DeclaredType type;
 
     private ConciselyAnnotatedClass(TypeElement element) {
         this.element = element;
+        this.type = (DeclaredType) element.asType();
     }
 
     public static ConciselyAnnotatedClass of(TypeElement element) {
@@ -33,6 +38,10 @@ public class ConciselyAnnotatedClass {
 
     public TypeElement getElement() {
         return element;
+    }
+
+    public DeclaredType getType() {
+        return type;
     }
 
     @Override
