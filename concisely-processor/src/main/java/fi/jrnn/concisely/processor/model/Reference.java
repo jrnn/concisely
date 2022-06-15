@@ -5,10 +5,17 @@
  */
 package fi.jrnn.concisely.processor.model;
 
+import javax.lang.model.element.ExecutableElement;
+
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Represents a relation between two Concisely classes.
+ * <p>
+ * Should tell how the {@code source} class accesses the {@code target} class with {@link #getAccessor()}. It's assumed
+ * that there can be no more than one reference between certain classes, so the accessor is not taken into account in
+ * {@link #equals(Object)} and {@link #hashCode()}.
  * <p>
  * Conceptually, maybe the closest counterpart are cardinalities e.g. one-to-one, one-to-many, etc.
  * <p>
@@ -20,6 +27,7 @@ public class Reference {
 
     private final ConciselyAnnotatedClass source;
     private final ConciselyAnnotatedClass target;
+    private ExecutableElement accessor;
 
     private Reference(ConciselyAnnotatedClass source, ConciselyAnnotatedClass target) {
         this.source = source;
@@ -36,6 +44,14 @@ public class Reference {
 
     public ConciselyAnnotatedClass getTarget() {
         return target;
+    }
+
+    public Optional<ExecutableElement> getAccessor() {
+        return Optional.ofNullable(accessor);
+    }
+
+    public void setAccessor(ExecutableElement accessor) {
+        this.accessor = accessor;
     }
 
     @Override

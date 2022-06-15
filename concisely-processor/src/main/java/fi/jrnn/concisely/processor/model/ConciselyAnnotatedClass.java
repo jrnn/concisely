@@ -81,7 +81,11 @@ public class ConciselyAnnotatedClass {
 
         getReferences().forEach(reference -> sb
                 .append("\n        refers to ")
-                .append(reference.getTarget().getElement()));
+                .append(reference.getTarget().getElement())
+                .append(" with ")
+                .append(reference.getAccessor()
+                        .map(Object::toString)
+                        .orElse("NONE")));
 
         return sb.append("\n").toString();
     }

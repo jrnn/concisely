@@ -5,6 +5,7 @@
  */
 package fi.jrnn.concisely.processor.discovery;
 
+import static fi.jrnn.concisely.TestUtil.randomEnumExcluding;
 import static javax.lang.model.element.ElementKind.FIELD;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -32,8 +33,6 @@ import javax.lang.model.element.VariableElement;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Stream;
 
 /**
  * @author Juho Juurinen
@@ -106,16 +105,5 @@ class TestReferenceDiscovery {
                         -> assertThat(reference.getTarget(), equalTo(targetClass)));
             }
         }
-    }
-
-    @SafeVarargs
-    private static <E extends Enum<E>> E randomEnumExcluding(Class<E> enumClass, E... toExclude) {
-        var exclusionSet = Set.of(toExclude);
-        var constants = Stream
-                .of(enumClass.getEnumConstants())
-                .filter(constant -> !exclusionSet.contains(constant))
-                .toList();
-
-        return constants.get(ThreadLocalRandom.current().nextInt(constants.size()));
     }
 }

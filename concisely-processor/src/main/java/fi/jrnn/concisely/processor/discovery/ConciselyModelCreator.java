@@ -18,7 +18,8 @@ import java.util.Set;
 /**
  * Creates a model from classes annotated with {@link Concisely}, based on which the output will be generated.
  * <p>
- * The produced model needs to depict how the classes in scope relate to one another (here called "references").
+ * The produced model needs to depict how the classes in scope relate to one another (here called "references"), and
+ * how those relations are traversed in practice (here called "accessors").
  * <p>
  * Coincidentally the model takes the form of a directed graph, though there's nothing going on here which would take
  * advantage of such organization (e.g. BFS, DFS, strongly connected components, what have you...) But who knows, maybe
@@ -40,6 +41,7 @@ public class ConciselyModelCreator {
                 .collect(toSet());
 
         new ReferenceDiscovery(types).mapReferences(conciselyAnnotatedClasses);
+        new AccessorDiscovery(types).addAccessors(conciselyAnnotatedClasses);
 
         return conciselyAnnotatedClasses;
     }
