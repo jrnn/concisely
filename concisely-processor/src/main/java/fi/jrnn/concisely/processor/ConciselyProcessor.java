@@ -5,13 +5,19 @@
  */
 package fi.jrnn.concisely.processor;
 
+import static java.lang.String.format;
 import static java.util.stream.Collectors.toSet;
+import static javax.tools.Diagnostic.Kind.NOTE;
+
+import fi.jrnn.concisely.VisibleForTesting;
+import fi.jrnn.concisely.processor.discovery.ConciselyModelCreator;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
+
 import java.util.Set;
 
 /**
@@ -27,14 +33,29 @@ public class ConciselyProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        var conciselyElements = annotations.stream()
+        var conciselyAnnotatedElements = annotations.stream()
                 .flatMap(annotation -> roundEnv.getElementsAnnotatedWith(annotation).stream())
                 .map(TypeElement.class::cast)
                 .collect(toSet());
 
-        System.out.printf("[%s] found classes annotated with @Concisely = %s\n",
-                getClass().getSimpleName(), conciselyElements);
+        debug(format("found elements annotated with @Concisely = %s", conciselyAnnotatedElements));
+
+        if (conciselyAnnotatedElements.isEmpty()) {
+            return false;
+        }
+        var conciselyAnnotatedClasses = modelCreator().createModel(conciselyAnnotatedElements);
+
+        debug(format("created model = %s", conciselyAnnotatedClasses));
 
         return false;
+    }
+
+    @VisibleForTesting
+    ConciselyModelCreator modelCreator() {
+        return new ConciselyModelCreator();
+    }
+
+    private void debug(String message) {
+        processingEnv.getMessager().printMessage(NOTE, format("[%s] %s\n", getClass().getSimpleName(), message));
     }
 }
