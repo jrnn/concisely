@@ -11,8 +11,10 @@ import static javax.tools.Diagnostic.Kind.NOTE;
 
 import fi.jrnn.concisely.VisibleForTesting;
 import fi.jrnn.concisely.processor.discovery.ConciselyModelCreator;
+import fi.jrnn.concisely.processor.generator.ConciselyGenerator;
 
 import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
@@ -28,6 +30,7 @@ import java.util.Set;
 @SupportedAnnotationTypes("fi.jrnn.concisely.annotation.Concisely")
 public class ConciselyProcessor extends AbstractProcessor {
 
+    private Filer filer;
     private Types types;
 
     @Override
@@ -38,6 +41,7 @@ public class ConciselyProcessor extends AbstractProcessor {
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
+        this.filer = processingEnv.getFiler();
         this.types = processingEnv.getTypeUtils();
     }
 
@@ -56,6 +60,8 @@ public class ConciselyProcessor extends AbstractProcessor {
         var conciselyAnnotatedClasses = modelCreator().createModel(conciselyAnnotatedElements);
 
         debug(format("created model = %s", conciselyAnnotatedClasses));
+
+        new ConciselyGenerator(filer).generateSourceFiles(conciselyAnnotatedClasses);
 
         return false;
     }
