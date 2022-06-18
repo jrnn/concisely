@@ -32,23 +32,7 @@ class ClassWriter {
             import java.util.stream.Stream;
 
             abstract class %s<T extends %s> extends AbstractConcisely<T> {
-
-                %s(Stream<T> stream) {
-                    super(stream);
-                }
-
-                %s(T t) {
-                    super(t);
-                }
-
-                %s(Collection<T> ts) {
-                    super(ts);
-                }
-
-                %s(Optional<T> maybeT) {
-                    super(maybeT);
-                }
-            %s}
+            %s%s}
             """;
 
     private static final String PUBLIC_TEMPLATE = """
@@ -61,23 +45,7 @@ class ClassWriter {
             import java.util.stream.Stream;
 
             public class %s extends Abstract%s {
-
-                public %s(Stream<%s> stream) {
-                    super(stream);
-                }
-
-                public %s(%s t) {
-                    super(t);
-                }
-
-                public %s(Collection<%s> ts) {
-                    super(ts);
-                }
-
-                public %s(Optional<%s> maybeT) {
-                    super(maybeT);
-                }
-            }
+            %s}
             """;
 
     private static final String ACCESSOR_METHOD_TEMPLATE = """
@@ -108,7 +76,7 @@ class ClassWriter {
                     DEFAULT_PACKAGE_NAME,
                     toImportsString(conciselyClass),
                     abstractClassName, className,
-                    abstractClassName, abstractClassName, abstractClassName, abstractClassName,
+                    ConstructorsTemplate.forAbstractClass(abstractClassName),
                     toMethodsString(conciselyClass)
             ));
         }
@@ -121,10 +89,7 @@ class ClassWriter {
                     DEFAULT_PACKAGE_NAME,
                     toQualifiedName(conciselyClass),
                     publicClassName, publicClassName,
-                    publicClassName, className,
-                    publicClassName, className,
-                    publicClassName, className,
-                    publicClassName, className
+                    ConstructorsTemplate.forPublicClass(publicClassName, className)
             ));
         }
     }
