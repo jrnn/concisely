@@ -9,7 +9,6 @@ import static java.lang.String.format;
 import static java.util.stream.Collectors.joining;
 
 import fi.jrnn.concisely.processor.model.ConciselyAnnotatedClass;
-import fi.jrnn.concisely.processor.model.Reference;
 
 import javax.annotation.processing.Filer;
 
@@ -46,17 +45,6 @@ class ClassWriter {
 
             public class %s extends Abstract%s {
             %s}
-            """;
-
-    private static final String ACCESSOR_METHOD_TEMPLATE = """
-
-                private Stream<%s> to%sStream() {
-                    return stream.flatMap(t -> safeStream(t.%s));
-                }
-
-                public %sConcisely %s() {
-                    return new %sConcisely(to%sStream());
-                }
             """;
 
     private final Filer filer;
@@ -104,11 +92,6 @@ class ClassWriter {
         return format("%s%s", firstLetter, s.substring(1));
     }
 
-    private static String lowerFirst(String s) {
-        var firstLetter = s.substring(0, 1).toLowerCase();
-        return format("%s%s", firstLetter, s.substring(1));
-    }
-
     private static String toQualifiedName(ConciselyAnnotatedClass conciselyClass) {
         return conciselyClass.getElement().getQualifiedName().toString();
     }
@@ -125,17 +108,9 @@ class ClassWriter {
 
     private static String toMethodsString(ConciselyAnnotatedClass conciselyClass) {
         return conciselyClass.getReferences().stream()
-                .map(ClassWriter::toMethodString)
+                .map(reference -> MethodTemplate.toTarget(
+                        getSimpleName(reference.getTarget()),
+                        reference.getAccessor().orElseThrow()))
                 .collect(joining());
-    }
-
-    private static String toMethodString(Reference reference) {
-        var targetClassName = getSimpleName(reference.getTarget());
-        return format(ACCESSOR_METHOD_TEMPLATE,
-                targetClassName, upperFirst(targetClassName),
-                reference.getAccessor().orElseThrow(),
-                targetClassName, lowerFirst(targetClassName),
-                targetClassName, targetClassName
-        );
     }
 }
